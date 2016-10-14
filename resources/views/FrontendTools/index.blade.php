@@ -15,6 +15,7 @@
     <section style="content-wrapper">
         <div style="content container">
             <h1 style="content-head">Frontend tools: {{ $desc }}</h1>
+            @include('user.show', array('myUser'=>$generatedUser))
         </div>
     </section>
 
