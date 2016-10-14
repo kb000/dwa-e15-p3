@@ -7,21 +7,29 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Kb0\FrontendBuddy\UserStub;
-use fzaninotto\faker as faker;
+use Faker\Factory as FakerFactory;
 
 class FrontendToolController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    private $personFaker;
+    protected $faker;
+    protected $locale;
 
     function getRandomUserStubs($num) {
+        $fake = &$this->faker;
         $users = array($num);
         for ($i = 0; $i <= $num; $i++) {
             $u = new UserStub();
-            $u->firstName = $this->personFaker->firstName();
-            $u->lastName = $this->personFaker->lastName();
-            $u->userName = "user".$i;
+            $u->firstName = $fake->firstName;
+            $u->lastName = $fake->lastName;
+            $u->postalCode =  $fake->postCode;
+            $u->email = $fake->email;
+            $u->locale = $this->locale or $fake->locale;
+            $u->username = $fake->userName;
+            // TODO: Generate or choose an avatar?
+            // TODO: Dynamically resize?
+            $u->photoUri = '/img/default-user-t.png';
             $users[$i] =  $u;
         }
         return $users;
@@ -29,11 +37,13 @@ class FrontendToolController extends BaseController
 
     function index() {
         
+        $this->locale = FakerFactory::DEFAULT_LOCALE;
+        $this->faker = FakerFactory::create($this->locale);
         $user = $this->getRandomUserStubs(1)[0];
-        $personFaker = new faker\en_US\Person();
+
 
         return view('FrontendTools.index')
-            ->with('desc', "Empty user!")
+            ->with('desc', "Random user!")
             ->with('generatedUser', $user);
     }
 }
