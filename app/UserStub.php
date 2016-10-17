@@ -16,4 +16,22 @@ class UserStub
 	public $username = '';
 	public $photoUri = '';
     public $locale = '';
+
+	/**
+	 * Gets the user properties for display as hash.
+	 * @return hashmap
+	 */
+	public function getDisplayProperties() {
+		return [
+			"Name" => $this->getFullName(),
+			"Email" => $this->email,
+			"Username" => $this->username,
+			"Postal Code" => $this->postalCode,
+			"Locale" => $this->locale,
+		];
+	}
+
+	private function getFullName() {
+		return $this->firstName . ' ' . $this->lastName;
+	}
 }

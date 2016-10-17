@@ -8,15 +8,18 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Kb0\FrontendBuddy\UserStub;
 use Faker\Factory as FakerFactory;
+use Identicon\Identicon;
 
 class FrontendToolController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $faker;
+    protected $imageGenerator;
     protected $locale;
 
     function getRandomUserStubs($num) {
+        $imageGen = &$this->imageGenerator;
         $fake = &$this->faker;
         $users = array($num);
         for ($i = 0; $i <= $num; $i++) {
@@ -29,7 +32,8 @@ class FrontendToolController extends BaseController
             $u->username = $fake->userName;
             // TODO: Generate or choose an avatar?
             // TODO: Dynamically resize?
-            $u->photoUri = '/img/default-user-t.png';
+            $imageGenSlugText = $u->username . $u->firstName . $u->lastName . $u->postalCode;
+            $u->photoUri = $imageGen->getImageDataUri($imageGenSlugText);
             $users[$i] =  $u;
         }
         return $users;
@@ -37,6 +41,7 @@ class FrontendToolController extends BaseController
 
     function index() {
         
+        $this->imageGenerator = new Identicon();
         $this->locale = FakerFactory::DEFAULT_LOCALE;
         $this->faker = FakerFactory::create($this->locale);
         $user = $this->getRandomUserStubs(1)[0];
