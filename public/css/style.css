@@ -21,6 +21,14 @@ h3 {
     color: #0B2877;
 }
 
+header {
+    padding-top: 2em;
+}
+
+header img {
+    margin: auto;
+}
+
 .content-head {
     text-align: center;
     font-weight: 400;
@@ -57,10 +65,25 @@ h3 {
     font-weight: bold;
 }
 
+.content-sheets { 
+    margin-left: 0;
+}
+
 .user-sheet {
-    max-width: 20em;
+    float: left;
+    margin: 1em;
+    max-width: 25em;
+}
+
+.avatar {
     margin-left: auto;
     margin-right: auto;
+}
+
+.ipsum-sheet {
+    float: left;
+    margin: 1em;
+    max-width: 35em;
 }
 
 /* Responsive css for medium screens */
@@ -70,7 +93,11 @@ h3 {
         padding: 1em;
         font-size: 16px;
     }
-    
+        
+    .content-sheets { 
+        margin-left: 2em;
+    }
+
     .password-panel {
         padding: 2em;
         width: 60%;
@@ -81,5 +108,9 @@ h3 {
 /* Responsive css for large screens */
 
 @media (min-width: 78em) {
+
+    .content-sheets { 
+        margin-left: 8em;
+    }
 
 }
