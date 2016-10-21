@@ -51,17 +51,27 @@ class FrontendToolController extends BaseController
         return $ipsum;
     }
 
+    function getGeneratorInputParameters() {
+        return array(
+            'min' => 1,
+            'max' => 16,
+            'step' => 1,
+            'initValue' => 4
+        );
+    }
+
     function index() {
-        
         $this->ipsumGenerator = new LoremIpsumGenerator();
         $this->imageGenerator = new Identicon();
         $this->locale = FakerFactory::DEFAULT_LOCALE;
         $this->faker = FakerFactory::create($this->locale);
         $user = $this->getRandomUserStubs(1)[0];
         $ipsum = $this->getIpsum();
+        $formParams = $this->getGeneratorInputParameters();
 
         return view('FrontendTools.index')
             ->with('desc', "Random stuff!")
+            ->with('generatorInputs', $formParams)
             ->with('generatedIpsum', $ipsum)
             ->with('generatedUser', $user);
     }

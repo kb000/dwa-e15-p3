@@ -1,5 +1,4 @@
-<div class='ipsum-sheet'>
-  <h2>Generated Lorem Ipsum:</h2>
+<div>
   <div class='well'>
     {!! $myIpsum->getHtml() !!}
   </div>

@@ -69,7 +69,7 @@ header img {
     margin-left: 0;
 }
 
-.user-sheet {
+.user-sheet-container {
     float: left;
     margin: 1em;
     max-width: 25em;
@@ -80,9 +80,13 @@ header img {
     margin-right: auto;
 }
 
-.ipsum-sheet {
+.ipsum-sheet-container {
     float: left;
     margin: 1em;
+    max-width: 35em;
+}
+
+.ipsum-sheet {
     max-width: 35em;
 }
 
