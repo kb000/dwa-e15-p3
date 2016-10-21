@@ -7,7 +7,9 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Kb0\FrontendBuddy\UserStub;
+use Kb0\FrontendBuddy\IpsumInstance;
 use Faker\Factory as FakerFactory;
+use Badcow\LoremIpsum\Generator as LoremIpsumGenerator;
 use Identicon\Identicon;
 
 class FrontendToolController extends BaseController
@@ -16,6 +18,7 @@ class FrontendToolController extends BaseController
 
     protected $faker;
     protected $imageGenerator;
+    protected $ipsumGenerator;
     protected $locale;
 
     function getRandomUserStubs($num) {
@@ -39,16 +42,27 @@ class FrontendToolController extends BaseController
         return $users;
     }
 
+    function getIpsum() {
+        $ipsum = new IpsumInstance();
+        $paragraphs = $this->ipsumGenerator->getParagraphs(1);
+        foreach($paragraphs as $para) {
+            $ipsum->addParagraph($para);
+        }
+        return $ipsum;
+    }
+
     function index() {
         
+        $this->ipsumGenerator = new LoremIpsumGenerator();
         $this->imageGenerator = new Identicon();
         $this->locale = FakerFactory::DEFAULT_LOCALE;
         $this->faker = FakerFactory::create($this->locale);
         $user = $this->getRandomUserStubs(1)[0];
-
+        $ipsum = $this->getIpsum();
 
         return view('FrontendTools.index')
-            ->with('desc', "Random user!")
+            ->with('desc', "Random stuff!")
+            ->with('generatedIpsum', $ipsum)
             ->with('generatedUser', $user);
     }
 }

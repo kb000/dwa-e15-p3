@@ -18,6 +18,7 @@
             <h1 class="content-head">Frontend tools: {{ $desc }}</h1>
             <div class="row">
                 @include('user.show', array('myUser'=>$generatedUser))
+                @include('ipsum.show', array('myIpsum'=>$generatedIpsum))
             </row>
         </div>
     </section>
