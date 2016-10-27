@@ -12,3 +12,7 @@
 */
 
 Route::get('/', 'FrontendToolController@index')->name('FrontendTools.index');
+
+Route::post('/user/generate', 'UserToolController@generate')->name('UserTools.generate');
+
+Route::post('/ipsum/generate', 'IpsumToolController@generate')->name('IpsumTools.generate');

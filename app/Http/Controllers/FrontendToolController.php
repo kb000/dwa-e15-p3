@@ -21,11 +21,18 @@ class FrontendToolController extends BaseController
     protected $ipsumGenerator;
     protected $locale;
 
+    public function __construct() {
+        $this->ipsumGenerator = new LoremIpsumGenerator();
+        $this->imageGenerator = new Identicon();
+        $this->locale = FakerFactory::DEFAULT_LOCALE;
+        $this->faker = FakerFactory::create($this->locale);
+    }
+
     function getRandomUserStubs($num) {
         $imageGen = &$this->imageGenerator;
         $fake = &$this->faker;
         $users = array($num);
-        for ($i = 0; $i <= $num; $i++) {
+        for ($i = 0; $i < $num; $i++) {
             $u = new UserStub();
             $u->firstName = $fake->firstName;
             $u->lastName = $fake->lastName;
@@ -33,8 +40,6 @@ class FrontendToolController extends BaseController
             $u->email = $fake->email;
             $u->locale = $this->locale or $fake->locale;
             $u->username = $fake->userName;
-            // TODO: Generate or choose an avatar?
-            // TODO: Dynamically resize?
             $imageGenSlugText = $u->username . $u->firstName . $u->lastName . $u->postalCode;
             $u->photoUri = $imageGen->getImageDataUri($imageGenSlugText);
             $users[$i] =  $u;
@@ -42,16 +47,16 @@ class FrontendToolController extends BaseController
         return $users;
     }
 
-    function getIpsum() {
+    function getIpsum($num) {
         $ipsum = new IpsumInstance();
-        $paragraphs = $this->ipsumGenerator->getParagraphs(1);
+        $paragraphs = $this->ipsumGenerator->getParagraphs($num);
         foreach($paragraphs as $para) {
             $ipsum->addParagraph($para);
         }
         return $ipsum;
     }
 
-    function getGeneratorInputParameters() {
+    protected function getGeneratorInputParameters() {
         return array(
             'min' => 1,
             'max' => 16,
@@ -61,18 +66,18 @@ class FrontendToolController extends BaseController
     }
 
     function index() {
-        $this->ipsumGenerator = new LoremIpsumGenerator();
-        $this->imageGenerator = new Identicon();
-        $this->locale = FakerFactory::DEFAULT_LOCALE;
-        $this->faker = FakerFactory::create($this->locale);
         $user = $this->getRandomUserStubs(1)[0];
-        $ipsum = $this->getIpsum();
-        $formParams = $this->getGeneratorInputParameters();
+        $ipsum = $this->getIpsum(1);
 
-        return view('FrontendTools.index')
+        return $this->decorateView(
+            view('FrontendTools.index')
             ->with('desc', "Random stuff!")
-            ->with('generatorInputs', $formParams)
             ->with('generatedIpsum', $ipsum)
-            ->with('generatedUser', $user);
+            ->with('generatedUser', $user));
+    }
+
+    protected function decorateView($view) {
+        $formParams = $this->getGeneratorInputParameters();
+        return $view->with('generatorInputs', $formParams);
     }
 }
