@@ -6,7 +6,7 @@ Submitted as DWA (CSCI-E15) [Project 3](http://dwa15.com/Projects.../P3) 2016-10
 
 This site is published at [http://p3.dwa-e15.kb0.org/](http://p3.dwa-e15.kb0.org/)
 
-This site is demonstrated at [https://youtu.be/TODO](https://youtu.be/TODO)
+This site is demonstrated at [https://youtu.be/RHvFrhz5u-k](https://youtu.be/RHvFrhz5u-k)
 
 ## Site content
 The site provides randomized filler content appropriate for a web frontend developer to use in a
