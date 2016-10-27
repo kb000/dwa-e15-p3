@@ -30,7 +30,7 @@ class IpsumToolController extends FrontendToolController
         $ipsum = $this->getIpsum($num);
 
         return $this->decorateView(
-            view('Ipsum.index')
+            view('ipsum.index')
             ->with('desc', "Random Ipsum text!")
             ->with('generatedIpsum', $ipsum));;
     }

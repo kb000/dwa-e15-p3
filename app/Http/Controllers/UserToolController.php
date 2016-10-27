@@ -31,7 +31,7 @@ class UserToolController extends FrontendToolController
         $formParams = $this->getGeneratorInputParameters();
 
         return $this->decorateView(
-            view('User.index')
+            view('user.index')
             ->with('desc', "$num Random users!")
             ->with('generatedUsers', $users));;
     }
