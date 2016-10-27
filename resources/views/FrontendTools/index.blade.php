@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-<h1 class='content-head'>Frontend tools: {{ $desc }}</h1>
 <div class='content-sheets'>
     <div class='user-sheet-container'>
         <h2>Generated User:</h2>

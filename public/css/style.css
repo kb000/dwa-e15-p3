@@ -29,7 +29,7 @@ header img {
     margin: auto;
 }
 
-.content-head {
+header h1 {
     text-align: center;
     font-weight: 400;
     text-transform: uppercase;
